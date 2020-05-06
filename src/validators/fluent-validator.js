@@ -1,29 +1,39 @@
 'use strict';
 
-let errors = [];
+let errors = {};
 
 function ValidationContract() {
-    errors = [];
+    errors = {};
 }
 
-ValidationContract.prototype.isRequired = (value, message) => {
-    if (!value || value.length <= 0)
-        errors.push({ message: message});
+ValidationContract.prototype.isRequired = (body, field, message) => {
+    if (!body[field] || body[field].length <= 0) {
+        errors[field] = message;
+    }
 }
 
-ValidationContract.prototype.hasMinLen = (value, min, message) => {
-    if (!value || value.length < min)
-        errors.push({ message: message});
+ValidationContract.prototype.hasMinLen = (body, field, min, message) => {
+    if (!body[field] || body[field].length < min) {
+        errors[field] = message;
+    }
 }
 
-ValidationContract.prototype.hasMaxLen = (value, max, message) => {
-    if (!value || value.length > max)
-        errors.push({ message: message});
+ValidationContract.prototype.hasMaxLen = (body, field, max, message) => {
+    if (!body[field] || body[field].length > max) {
+        errors[field] = message;
+    }
 }
 
-ValidationContract.prototype.isFixedLen = (value, len, message) => {
-    if (!value || value.length != len)
-        errors.push({ message: message});
+ValidationContract.prototype.isFixedLen = (body, field, len, message) => {
+    if (!body[field] || body[field].length != len) {
+        errors[field] = message;
+    }
+}
+
+ValidationContract.prototype.isJson = (body, field, message) => {
+    if (typeof body[field] != 'object') {
+        errors[field] = message;
+    }
 }
 
 ValidationContract.prototype.errors = () => {
@@ -35,13 +45,14 @@ ValidationContract.prototype.clear = () => {
 }
 
 ValidationContract.prototype.isValid = () => {
-    return errors.length == 0;
+    return Object.keys(errors).length == 0;
 }
 
 ValidationContract.prototype.isEmail = (value, message) => {
     var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
-    if (!reg.test(value))
-        errors.push({ message: message });
+    if (!reg.test(value)) {
+        errors[field] = message;
+    }
 }
 
 module.exports = ValidationContract;

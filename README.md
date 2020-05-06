@@ -1,4 +1,4 @@
-# Customer and authentication using Netlify Serverless
+# user and authentication using Netlify Serverless
 
 This project is ready to be deployed on netlify.
 
@@ -6,6 +6,6 @@ This project is ready to be deployed on netlify.
 
 ````
 GET - https://your-domain.netlify.app/.netlify/functions/api/  -> api version.
-POST - https://your-domain.netlify.app/.netlify/functions/api/customers/authenticate  -> authenticate.
-POST - https://your-domain.netlify.app/.netlify/functions/api/customers  -> add a customer.
+POST - https://your-domain.netlify.app/.netlify/functions/api/users/authenticate  -> authenticate.
+POST - https://your-domain.netlify.app/.netlify/functions/api/users  -> add a user.
 ````

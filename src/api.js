@@ -11,16 +11,16 @@ const app = express();
 const mongoose = require('mongoose');
 
 mongoose.connect(config.connectionString);
-console.log('connection', config.connectionString);
-const Customer = require('./models/customer');
+
+const User = require('./models/user');
 
 const indexRoute = require('./routes/index-route');
-const customerRoutes = require('./routes/customer-route');
+const userRoutes = require('./routes/user-route');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
 app.use('/.netlify/functions/api', indexRoute);
-app.use('/.netlify/functions/api/customers', customerRoutes);
+app.use('/.netlify/functions/api/users', userRoutes);
 
 module.exports.handler = serverless(app);
