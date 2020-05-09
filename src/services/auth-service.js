@@ -1,9 +1,10 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
+const DAYS_IN_FUTURE = '30d';
 
 exports.generateToken = async (data) => {
-    return jwt.sign(data, global.SALT_KEY, {expiresIn: '1d'});
+    return jwt.sign(data, global.SALT_KEY, {expiresIn: DAYS_IN_FUTURE});
 }
 
 exports.decodeToken = async (token) => {
@@ -12,7 +13,7 @@ exports.decodeToken = async (token) => {
 }
 
 exports.authorize = function  (req, res, next) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    const token = req.body.token || req.query.token || req.headers['authorization'];
 
     if (!token) {
         res.status(401).json({

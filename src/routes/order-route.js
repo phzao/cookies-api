@@ -3,8 +3,8 @@
 const express = require('express');
 const router = express.Router();
 
-const controller = require('../controllers/user-controller');
+const controller = require('../controllers/employee-controller');
 
-router.post('', controller.authenticate);
+router.post('', controller.post);
 
 module.exports = router;

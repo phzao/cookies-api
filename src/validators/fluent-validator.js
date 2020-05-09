@@ -18,6 +18,12 @@ ValidationContract.prototype.hasMinLen = (body, field, min, message) => {
     }
 }
 
+ValidationContract.prototype.hasExacLen = (body, field, len, message) => {
+    if (!body[field] || body[field].length !== len) {
+        errors[field] = message;
+    }
+}
+
 ValidationContract.prototype.hasMaxLen = (body, field, max, message) => {
     if (!body[field] || body[field].length > max) {
         errors[field] = message;
