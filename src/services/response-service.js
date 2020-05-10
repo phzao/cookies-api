@@ -1,4 +1,4 @@
-'use-stricts';
+'use-strict';
 const systemConst = require('../helpers/systtem-consts');
 
 exports.responseCreated = (res, jsonData, headers) => {
@@ -20,6 +20,10 @@ exports.responseUnprocessableEntity = (res, jsonData, headers) => {
         status: 'fail',
         data: jsonData
     });
+};
+
+exports.responseUpdatedResources = (res, headers) => {
+    res.status(systemConst.HTTP_UPDATED).send();
 };
 
 exports.responseBadRequest = (res, message, headers) => {

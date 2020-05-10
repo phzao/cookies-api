@@ -1,8 +1,7 @@
-'use stricts';
+'use strict';
 
-const ValidationContract = require('../validators/fluent-validator');
+const ValidateProduct = require('../models/validator/product-validate');
 const repository = require('../repositories/product-respository');
-const md5 = require('md5');
 const response = require('../services/response-service');
 
 exports.get = async (req, res, next) => {
@@ -12,20 +11,15 @@ exports.get = async (req, res, next) => {
 };
 
 exports.post = async (req, res, next) => {
-    let contract = new ValidationContract();
-    contract.hasMinLen(req.body,'name', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
-    contract.hasMinLen(req.body, 'weight',2, 'Peso é obrigatório');
+    let validateProduct = new ValidateProduct()
 
-    if (!contract.isValid()) {
-        response.responseUnprocessableEntity(res, contract.errors());
-    }
+    validateProduct.isValid(req.body, res, response);
+
     try {
+        validateProduct.set(req.body);
 
-        const data = await repository.save({
-            name: req.body.name,
-            description: req.body.description,
-            weight: req.body.weight
-        });
+        const product = validateProduct.get();
+        const data = await repository.save(product);
 
         response.responseCreated(res, data);
     } catch (e) {

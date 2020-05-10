@@ -1,4 +1,4 @@
-'use stricts';
+'use strict';
 
 const ValidationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/user-respository');
@@ -32,10 +32,8 @@ exports.post = async(req, res, next) => {
         });
 
         // emailService.send(req.body.email, 'Hi', 'Bem vindo');
-        // res.status(201).send({message:"User cadastrado com sucesso"});
         response.responseCreated(res, data);
     } catch (e) {
         response.responseBadRequest(res, "Erro ao salvar employee")
-        // res.status(systemConst.HTTP_BAD_REQUEST).send({message:"Erro ao salvar user", data: e});
     }
 }

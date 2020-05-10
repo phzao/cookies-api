@@ -1,4 +1,4 @@
-'use stricts';
+'use strict';
 
 const ValidationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/user-respository');
@@ -13,7 +13,6 @@ exports.authenticate = async (req, res, next) => {
     contract.hasMinLen(req.body, 'password', 6, 'O password deve conter no mínimo 6 caracters');
 
     if (!contract.isValid()) {
-        console.log('faill', contract.errors());
         response.responseUnprocessableEntity(res, contract.errors());
         return;
     }
@@ -26,7 +25,6 @@ exports.authenticate = async (req, res, next) => {
 
         if (!user) {
             response.responseUnauthorized(res, "Usuario ou senha invalidos");
-            // res.status(404).send({message: "Usuario ou senha invalidos"});
             return ;
         }
 
@@ -37,18 +35,10 @@ exports.authenticate = async (req, res, next) => {
                 email: user.email
             }
         });
-console.log('token', token);
-        // const apiToken = {
-        //     user: user._id,
-        //     token: {
-        //         type: String,
-        //         default: generateToken()
-        //     }
-        // };
+
         res.status(200).send({data:user, token:token});
     } catch (e) {
         response.responseUnauthorized(res, "Erro ao tentar autenticar");
-        // res.status(400).send({message:"Erro ao salvar user", data: e});
     }
 }
 

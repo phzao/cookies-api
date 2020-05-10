@@ -54,6 +54,12 @@ ValidationContract.prototype.isValid = () => {
     return Object.keys(errors).length == 0;
 }
 
+ValidationContract.prototype.isArrayGreaterThan = (body, field, len, message) => {
+    if (!body[field] || !Array.isArray(body[field]) ||  body[field].length < len) {
+        errors[field] = message;
+    }
+}
+
 ValidationContract.prototype.isEmail = (value, message) => {
     var reg = new RegExp(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/);
     if (!reg.test(value)) {
