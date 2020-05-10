@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const cors = require('cors');
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
@@ -23,6 +24,12 @@ const authenticateRoutes = require('./routes/user-route');
 const productRoutes = require('./routes/product-route');
 const orderRoutes = require('./routes/order-route');
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
