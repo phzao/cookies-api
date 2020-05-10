@@ -1,0 +1,289 @@
+{
+    "info": {
+        "_postman_id": "990d6b4f-0c0f-43e3-b133-b76d39255760",
+        "name": "cookies",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Authenticate",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"email\": \"ph@ph.com\",\n\t\"password\": \"123456\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/authenticate",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "authenticate"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "Employees",
+            "item": [
+                {
+                    "name": "Save",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"email\": \"ph@ph.com\",\n\t\"name\": \"ph \" ,\n\t\"password\": \"123456\",\n\t\"roles\": [\"ADMIN\"],\n\t\"city\": \"araraquara\",\n\t\"state\": \"SP\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/employees",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "employees"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Save",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "{{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"name\": \"Cookie baunilha\",\n\t\"weight\": \"110g\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/products",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get All",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "{{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/products",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "products"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "Orders",
+            "item": [
+                {
+                    "name": "Save",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "{{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"to\": \"Paulo Henrique\",\n\t\"street\": \"Rua dom felipe\",\n\t\"number\": \"600\",\n\t\"province\": \"Praia Comprida\",\n\t\"city\": \"Araras\",\n\t\"state\": \"SP\",\n\t\"items\":[\n\t\t{\n\t\t\t\"product_id\":\"5eb849ab38c283a7ac08e19b\",\n\t\t\t\"name\": \"Cookie baunilha\",\n\t\t\t\"quantity\": 5,\n\t\t\t\"unit_price\": 15.50\n\t\t},\n\t\t{\n\t\t\t\"product_id\":\"5eb849b738c283a7ac08e19c\",\n\t\t\t\"name\": \"Cookie chocolate\",\n\t\t\t\"quantity\": 5,\n\t\t\t\"unit_price\": 15.50\n\t\t}]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/orders",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "orders"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get All",
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    },
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "{{token}}",
+                                "type": "text"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/orders",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "orders"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Set Processing",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "type": "text",
+                                "value": "{{token}}"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{url}}/orders/5eb84c7eadc773a7ac5659c3/processing",
+                            "host": [
+                                "{{url}}"
+                            ],
+                            "path": [
+                                "orders",
+                                "5eb84c7eadc773a7ac5659c3",
+                                "processing"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ],
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "version",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "type": "text",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"name\": \"Hellottttt John\",\n\t\"email\": \"phbotelho@gmail.com\",\n\t\"password\": 113324\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{url}}/",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
+}
