@@ -18,7 +18,7 @@ exports.authenticate = async (req, res, next) => {
     }
 
     try {
-        const user = await repository.authenticate({
+        let user = await repository.authenticate({
             email: req.body.email,
             password: md5(req.body.password+global.SALT_KEY)
         });
@@ -36,7 +36,9 @@ exports.authenticate = async (req, res, next) => {
             }
         });
 
-        res.status(200).send({data:user, token:token});
+        user.password = "";
+
+        response.responseSuccess(res, Object.assign({}, user['_doc'], {token: token}));
     } catch (e) {
         response.responseUnauthorized(res, "Erro ao tentar autenticar");
     }
