@@ -18,7 +18,7 @@ ValidateProduct.prototype.set = (body) => {
     };
 };
 
-ValidateProduct.prototype.get = () => {
+ValidateProduct.prototype.getProduct = () => {
     return product;
 };
 
@@ -26,7 +26,10 @@ ValidateProduct.prototype.isValid = (body, res, response) => {
     let contract = new ValidationContract();
 
     contract.hasMinLen(body, 'name', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
+    contract.hasMaxLen(body, 'name', 30, 'Nome é obrigatório e deve possuir no máximo 30 caracteres');
     contract.hasMinLen(body, 'weight', 2, 'Peso é obrigatório');
+    contract.hasMaxLen(body, 'weight', 10, 'Peso é obrigatório e deve possuir no máximo 10 caracteres');
+    contract.hasMaxLen(body, 'description', 300, 'Descrição deve possuir no máximo 300 caracteres');
 
     if (!contract.isValid()) {
         response.responseUnprocessableEntity(res, contract.errors());

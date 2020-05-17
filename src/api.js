@@ -17,6 +17,7 @@ mongoose.set('useCreateIndex', true);
 const User = require('./models/user');
 const Product = require('./models/product');
 const Order = require('./models/order');
+const ApiToken = require('./models/api-token');
 
 const indexRoute = require('./routes/index-route');
 const employeeRoutes = require('./routes/employee-route');

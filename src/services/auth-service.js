@@ -1,5 +1,8 @@
 'use strict';
 
+const ValidateApiToken = require('../models/validator/api-token-validate');
+const tokenRepository = require('../repositories/api-token-respository');
+const response = require('../services/response-service');
 const jwt = require('jsonwebtoken');
 const DAYS_IN_FUTURE = '30d';
 
@@ -12,7 +15,7 @@ exports.decodeToken = async (token) => {
     return data;
 }
 
-exports.authorize = function  (req, res, next) {
+exports.authorize = async (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers['authorization'];
 
     if (!token) {
@@ -20,12 +23,20 @@ exports.authorize = function  (req, res, next) {
             message: 'Permissao negada'
         })
     } else {
-        jwt.verify(token, global.SALT_KEY, function (error, decoded){
-            if (error) {
-                res.status(401).json({message: 'Token invalido!'})
-            } else {
-                next();
-            }
-        });
+        const apiTokenContract = new ValidateApiToken();
+        let tokenData = await tokenRepository.getByToken(token);
+
+        if (apiTokenContract.isExpiredDate(dataToken.expire_at)) {
+            tokenData.expired_at = new Date();
+            tokenRepository.save(tokenData);
+            response.responseUnauthorized(res, 'Token expirou, faça uma nova autenticação!');
+        }
+        // jwt.verify(token, global.SALT_KEY, function (error, decoded){
+        //     if (error) {
+        //         res.status(401).json({message: 'Token invalido!'})
+        //     } else {
+        //         next();
+        //     }
+        // });
     }
 }
