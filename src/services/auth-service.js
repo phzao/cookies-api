@@ -4,10 +4,10 @@ const ValidateApiToken = require('../models/validator/api-token-validate');
 const tokenRepository = require('../repositories/api-token-respository');
 const response = require('../services/response-service');
 const jwt = require('jsonwebtoken');
-const DAYS_IN_FUTURE = '30d';
+const crypto = require('crypto');
 
 exports.generateToken = async (data) => {
-    return jwt.sign(data, global.SALT_KEY, {expiresIn: DAYS_IN_FUTURE});
+    return crypto.createHash('sha512').update(JSON.stringify(data)+global.SALT_KEY).digest('hex');
 }
 
 exports.decodeToken = async (token) => {
