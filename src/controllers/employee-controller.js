@@ -18,6 +18,7 @@ exports.post = async(req, res, next) => {
         response.responseUnprocessableEntity(res, contract.errors());
         return;
     }
+
     try {
 
         const data = await repository.save({

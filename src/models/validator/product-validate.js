@@ -9,8 +9,18 @@ function ValidateProduct() {
     product = {};
 }
 
+ValidateProduct.prototype.getProductUpdated = (request, product) => {
+  return {
+    _id: product._id,
+    name: request.name || product.name,
+    description: request.description || product.description,
+    weight: request.weight || product.weight,
+    status: request.status || product.status
+  };
+}
+
 ValidateProduct.prototype.set = (body) => {
-    product = {
+     product = {
         name: body.name || null,
         description: body.description || null,
         weight: body.weight || null,
@@ -23,13 +33,14 @@ ValidateProduct.prototype.getProduct = () => {
 };
 
 ValidateProduct.prototype.isValid = (body, res, response) => {
+    console.log('isvalid', body);
     let contract = new ValidationContract();
 
     contract.hasMinLen(body, 'name', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
     contract.hasMaxLen(body, 'name', 30, 'Nome é obrigatório e deve possuir no máximo 30 caracteres');
     contract.hasMinLen(body, 'weight', 2, 'Peso é obrigatório');
     contract.hasMaxLen(body, 'weight', 10, 'Peso é obrigatório e deve possuir no máximo 10 caracteres');
-    contract.hasMaxLen(body, 'description', 300, 'Descrição deve possuir no máximo 300 caracteres');
+    contract.hasMaxLenOrNull(body, 'description', 300, 'Descrição deve possuir no máximo 300 caracteres');
 
     if (!contract.isValid()) {
         response.responseUnprocessableEntity(res, contract.errors());

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/api/js",
     "start": "netlify-lambda serve src",
     "build": "netlify-lambda build src"
   },
@@ -23,10 +24,8 @@
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
-    "graylog2": "^0.2.1",
     "guid": "0.0.12",
     "http": "0.0.0",
-    "jsonwebtoken": "^7.4.3",
     "md5": "^2.2.1",
     "mongoose": "^5.7.5",
     "netlify-lambda": "^1.6.3",

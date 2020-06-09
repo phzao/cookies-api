@@ -6,7 +6,7 @@ const controller = require('../controllers/product-controller');
 const authService = require('../services/auth-service');
 
 router.post('', authService.authorize, controller.post);
-router.put('', authService.authorize, controller.post);
-router.get('', authService.authorize, controller.get);
+router.put('/:id', authService.authorize, controller.update);
+router.get('', authService.authorize, controller.getAllWithoutFilter);
 
 module.exports = router;

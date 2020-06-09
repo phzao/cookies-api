@@ -14,10 +14,10 @@ const schema = new Schema({
         ref: 'Customer',
         default: null
     },
-    email: {
-        type: String,
-        default: null
-    },
+    // email: {
+    //     type: String,
+    //     default: null
+    // },
     phone: {
         type: String,
         default: null
@@ -43,10 +43,10 @@ const schema = new Schema({
             required: [true, "Estado é obrigatorio"]
         }
     },
-    message_card: {
-        type: String,
-        default: null
-    },
+    // message_card: {
+    //     type: String,
+    //     default: null
+    // },
     discount: {
         type: Number,
         default: null

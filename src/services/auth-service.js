@@ -3,7 +3,6 @@
 const ValidateApiToken = require('../models/validator/api-token-validate');
 const tokenRepository = require('../repositories/api-token-respository');
 const response = require('../services/response-service');
-const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 exports.generateToken = async (data) => {
@@ -11,7 +10,7 @@ exports.generateToken = async (data) => {
 }
 
 exports.decodeToken = async (token) => {
-    var data = await jwt.verify(token, global.SALT_KEY);
+    // var data = await jwt.verify(token, global.SALT_KEY);
     return data;
 }
 
@@ -26,11 +25,17 @@ exports.authorize = async (req, res, next) => {
         const apiTokenContract = new ValidateApiToken();
         let tokenData = await tokenRepository.getByToken(token);
 
-        if (apiTokenContract.isExpiredDate(dataToken.expire_at)) {
-            tokenData.expired_at = new Date();
-            tokenRepository.save(tokenData);
-            response.responseUnauthorized(res, 'Token expirou, faça uma nova autenticação!');
+        if (!tokenData) {
+          response.responseBadRequest(res, 'Token invalido');
         }
+
+        if (apiTokenContract.isExpiredDate(tokenData.expire_at)) {
+          tokenData.expired_at = new Date();
+          tokenRepository.save(tokenData);
+          response.responseUnauthorized(res, 'Token expirou, faça uma nova autenticação!');
+        }
+
+        next();
         // jwt.verify(token, global.SALT_KEY, function (error, decoded){
         //     if (error) {
         //         res.status(401).json({message: 'Token invalido!'})
