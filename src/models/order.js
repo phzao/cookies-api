@@ -14,39 +14,18 @@ const schema = new Schema({
         ref: 'Customer',
         default: null
     },
-    // email: {
-    //     type: String,
-    //     default: null
-    // },
+    cep: {
+        type: String,
+        required: [true, "Cep é obrigatório"]
+    },
     phone: {
         type: String,
         default: null
     },
     address: {
-        street: {
-            type: String,
-            required: [true, "Rua/Avenida é obrigatorio"]
-        },
-        number: {
-            type: String
-        },
-        province: {
-            type: String,
-            required: [true, "Bairro/Setor é obrigatorio"]
-        },
-        city: {
-            type: String,
-            required: [true, "Cidade é obrigatorio"]
-        },
-        state: {
-            type: String,
-            required: [true, "Estado é obrigatorio"]
-        }
+        type: String,
+        required: [true, "Endereço é obrigatório"]
     },
-    // message_card: {
-    //     type: String,
-    //     default: null
-    // },
     discount: {
         type: Number,
         default: null
@@ -79,7 +58,7 @@ const schema = new Schema({
     }],
     status: {
         type: String,
-        enum: [systemConst.ORDER_OPEN, systemConst.ORDER_DONE, systemConst.ORDER_CANCELED, systemConst.ORDER_PROCESSING],
+        enum: [systemConst.ORDER_OPEN, systemConst.ORDER_DONE, systemConst.ORDER_CANCELED, systemConst.ORDER_PROCESSING, systemConst.ORDER_DELIVERY],
         required: [true, "Status é obrigatório"],
         default: systemConst.ORDER_OPEN
     },

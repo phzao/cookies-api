@@ -13,9 +13,14 @@ exports.getAllWithoutFilter = async (req, res, next) => {
 exports.post = async (req, res, next) => {
     let validateProduct = new ValidateProduct()
 
-    validateProduct.isValid(req.body, res, response);
+    try {
+        const { isValid, errors } = validateProduct.isValid(req.body);
 
-     try {
+        if (!isValid) {
+            response.responseUnprocessableEntity(res, errors);
+            return;
+        } 
+        
         validateProduct.set(req.body);
 
         const product = validateProduct.getProduct();
@@ -35,18 +40,15 @@ exports.update = async (req, res, next) => {
     let product = await repository.getById(id);
 
     if (!product) {
-      response.responseBadRequest({id: "Não existe produto com o id informado"}, res, response);
+        response.responseBadRequest({id: "Não existe produto com o id informado"}, res, response);
     }
 
     try {
-      const productFilled = validateProduct.getProductUpdated(req.body, product);
-      console.log('filled', productFilled);
-      validateProduct.isValid(productFilled, res, response);
-    console.log('vai atualizar', productFilled);
-      const updated = await repository.save(productFilled);
-      response.responseUpdatedResources(res);
+        const productFilled = validateProduct.getProductUpdated(req.body, product);
+        validateProduct.isValid(productFilled, res, response);
+        const updated = await repository.save(productFilled);
+        response.responseUpdatedResources(res);
     } catch (e) {
-      console.log(e);
-      response.responseBadRequest(res, "Erro ao atualizar produto ", e);
+        response.responseBadRequest(res, "Erro ao atualizar produto ", e);
     }
 }

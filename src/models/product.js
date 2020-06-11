@@ -17,6 +17,10 @@ const schema = new Schema({
         type: String,
         required: [true, "Peso é obrigatorio"]
     },
+    price: {
+        type: Number,
+        required: [true, "Preço é obrigatório"]
+    },
     status: {
         type: String,
         enum: [systemConst.STATUS_ENABLE, systemConst.STATUS_DISABLE],

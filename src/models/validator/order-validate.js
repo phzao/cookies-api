@@ -26,12 +26,12 @@ ValidateOrder.prototype.sumItems = () => {
     if (order.items.length > 0) {
         let total = 0;
         order.items = order.items
-                           .map(item=>{
-                                let unit_total = (parseInt(item.quantity) * parseFloat(item.unit_price));
-                                total += unit_total;
-                                item.unit_total = unit_total;
-                                return item;
-                           });
+            .map(item=>{
+                let unit_total = (parseInt(item.quantity) * parseFloat(item.unit_price));
+                total += unit_total;
+                item.unit_total = unit_total;
+                return item;
+            });
 
         order.total_general = total;
     }
@@ -41,20 +41,19 @@ ValidateOrder.prototype.get = () => {
     return order;
 };
 
-ValidateOrder.prototype.isValid = (body, res, response) => {
+ValidateOrder.prototype.isValid = (body) => {
     let contract = new ValidationContract();
 
     contract.hasMinLen(body, 'to', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
-    contract.hasMinLen(body, 'street', 10, 'Rua é obrigatório e deve possuir no mínimo 10 caracters');
-    contract.hasMinLen(body, 'number', 1, 'Número é obrigatório e deve possuir no mínimo 1 caracters');
-    contract.hasMinLen(body, 'province', 5, 'Bairro/Setor é obrigatório e deve possuir no mínimo 5 caracters');
-    contract.hasMinLen(body, 'city', 3, 'Cidade é obrigatório e deve possuir no mínimo 3 caracters');
-    contract.hasExacLen(body, 'state', 2, 'Estado é obrigatório.');
+    contract.hasMinLen(body, 'address', 20, 'Endereço deve conter no mínimo 20 caracteres');
+    contract.hasMaxLen(body, 'address', 300, 'Endereço deve conter no máximo 300 caracteres');
+    contract.hasExacLen(body, 'cep', 8, 'Cep deve conter 8 digitos');
     contract.isArrayGreaterThan(body, 'items', 1, 'Deve ter ao menos 1 item no pedido.')
-    if (!contract.isValid()) {
-        response.responseUnprocessableEntity(res, contract.errors());
-        return;
-    }
+
+    return {
+        isValid: contract.isValid(),
+        errors: contract.errors()        
+    };
 };
 
 module.exports = ValidateOrder;

@@ -29,16 +29,22 @@ exports.processingOrder = async (req, res, next) => {
 exports.post = async (req, res, next) => {
     let validateOrder = new ValidateOrder()
 
-    validateOrder.isValid(req.body, res, response);
-
     try {
-        validateOrder.set(req.body);
-        validateOrder.sumItems();
-        const order = validateOrder.get();
-        const data = await repository.save(order);
+        const { isValid, errors } = validateOrder.isValid(req.body); 
+        if (!isValid)
+        {
+            response.responseUnprocessableEntity(res, errors);
+            return;
+        }  
 
-        response.responseCreated(res, data);
-    } catch (e) {
-        response.responseBadRequest(res, "Erro ao salvar pedido")
-    }
+            validateOrder.set(req.body);
+            validateOrder.sumItems();
+            const order = validateOrder.get();
+            const data = await repository.save(order);
+
+            response.responseCreated(res, data);
+        } catch (e) {
+            console.log("eee", e);
+            response.responseBadRequest(res, "Erro ao salvar pedido")
+        }
 }

@@ -25,6 +25,10 @@ ValidationContract.prototype.hasExacLen = (body, field, len, message) => {
 }
 
 ValidationContract.prototype.hasMaxLenOrNull = (body, field, len, message) => {
+    if (body[field]===null || body[field] === undefined) {
+        return;
+    }
+
     if (body[field] !==undefined &&  body[field].length !== len) {
         errors[field] = message;
     }
@@ -32,6 +36,13 @@ ValidationContract.prototype.hasMaxLenOrNull = (body, field, len, message) => {
 
 ValidationContract.prototype.hasMaxLen = (body, field, max, message) => {
     if (!body[field] || body[field].length > max) {
+        errors[field] = message;
+    }
+}
+
+ValidationContract.prototype.isNumber = (body, field, message, decimals=2) => {
+
+    if (!body[field] || isNaN(+body[field])) {
         errors[field] = message;
     }
 }
