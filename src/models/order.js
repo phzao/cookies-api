@@ -51,6 +51,10 @@ const schema = new Schema({
             type: Number,
             required: [true, "Preço é obrigatorio"]
         },
+        weight: {
+            type: String,
+            required: [true, "Peso é obrigatório"]
+        },
         unit_total: {
             type: Number,
             required: [true, "Total individual é obrigatorio"]

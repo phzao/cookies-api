@@ -11,13 +11,8 @@ function ValidateOrder() {
 ValidateOrder.prototype.set = (body) => {
     order = {
         to: body.to || null,
-        address: {
-            street: body.street || null,
-            number: body.number || null,
-            province: body.province || null,
-            city: body.city || null,
-            state: body.state || null
-        },
+        address: body.address || null,
+        cep: body.cep || null,
         items: body.items || null
     };
 };

@@ -4,6 +4,7 @@ const ValidateOrder = require('../models/validator/order-validate');
 const repository = require('../repositories/order-respository');
 const response = require('../services/response-service');
 const systemConst = require('../helpers/systtem-consts');
+const ProductService = require('../services/product-service');
 
 exports.get = async (req, res, next) => {
     const data = await repository.getAllBy();
@@ -28,6 +29,7 @@ exports.processingOrder = async (req, res, next) => {
 
 exports.post = async (req, res, next) => {
     let validateOrder = new ValidateOrder()
+    let productService = new ProductService();
 
     try {
         const { isValid, errors } = validateOrder.isValid(req.body); 
@@ -36,15 +38,17 @@ exports.post = async (req, res, next) => {
             response.responseUnprocessableEntity(res, errors);
             return;
         }  
+        productService.getProductListOrganized(req.body.items || []);
 
-            validateOrder.set(req.body);
-            validateOrder.sumItems();
-            const order = validateOrder.get();
-            const data = await repository.save(order);
+        validateOrder.set(req.body);
+        validateOrder.sumItems();
+        const order = validateOrder.get();
+        console.log("ordering", order);
+        // const data = await repository.save(order);
 
-            response.responseCreated(res, data);
-        } catch (e) {
-            console.log("eee", e);
-            response.responseBadRequest(res, "Erro ao salvar pedido")
-        }
+        response.responseCreated(res, []);
+    } catch (e) {
+        console.log("eee", e);
+        response.responseBadRequest(res, "Erro ao salvar pedido")
+    }
 }
