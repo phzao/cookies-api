@@ -35,7 +35,7 @@ const schema = new Schema({
         required: [true, "Preço Total é obrigatorio"]
     },
     items: [{
-        product_id: {
+        _id: {
             type: String,
             required: [true, "Produto é obrigatorio"]
         },
@@ -47,7 +47,7 @@ const schema = new Schema({
             type: Number,
             required: [true, "Quantidade é obrigatorio"]
         },
-        unit_price: {
+        price: {
             type: Number,
             required: [true, "Preço é obrigatorio"]
         },
@@ -55,7 +55,7 @@ const schema = new Schema({
             type: String,
             required: [true, "Peso é obrigatório"]
         },
-        unit_total: {
+        total: {
             type: Number,
             required: [true, "Total individual é obrigatorio"]
         }

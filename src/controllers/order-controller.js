@@ -33,20 +33,26 @@ exports.post = async (req, res, next) => {
 
     try {
         const { isValid, errors } = validateOrder.isValid(req.body); 
-        if (!isValid)
-        {
+
+        if (!isValid){
             response.responseUnprocessableEntity(res, errors);
             return;
         }  
-        productService.getProductListOrganized(req.body.items || []);
+
+        req.body.items = await productService.getProductListOrganized(req.body.items || []);
+
+        if (req.body.items.length < 1){
+            response.responseBadRequest(res, "Items informados são inválidos");
+            return;
+        } 
 
         validateOrder.set(req.body);
         validateOrder.sumItems();
         const order = validateOrder.get();
-        console.log("ordering", order);
-        // const data = await repository.save(order);
+        console.log("orderr", order);
+        const data = await repository.save(order);
 
-        response.responseCreated(res, []);
+        response.responseCreated(res, data);
     } catch (e) {
         console.log("eee", e);
         response.responseBadRequest(res, "Erro ao salvar pedido")

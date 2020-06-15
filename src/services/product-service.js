@@ -15,15 +15,37 @@ ProductService.prototype.getProductListOrganized = async (list) => {
         typeof list[Symbol.iterator] === "function" && 
         Object.keys(list).length > 0) {
 
-        const products = await Promise.all(
-            list.map(item=>{
-                if (item.product_id === undefined) {
-                    return;
-                }
-                return repository.getByIdAndStatus(item.product_id);
-            }));
-        console.log("products", products);
+        const getProduct = async id => {
+            return repository
+                .getByIdAndStatus(id)
+                .then(res=>{
+                    if (res) {
+                        return Promise.resolve(res);
+                    }
+                });
+        }
 
+        const productList = list.map(item=>{
+            if (item.product_id === undefined) {
+                return false;
+            }
+
+            return getProduct(item.product_id)
+                .then(res=>{
+                    if (res.length > 0) {
+
+                        let prod = res[0]._doc;
+                        prod.quantity = item.quantity;
+                        return prod;
+                    }
+                }); 
+        });
+
+        return Promise
+            .all(productList)
+            .then(res=>{
+                return res.filter(item=>item);
+            });
     }
 }
 

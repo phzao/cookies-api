@@ -13,19 +13,22 @@ ValidateOrder.prototype.set = (body) => {
         to: body.to || null,
         address: body.address || null,
         cep: body.cep || null,
-        items: body.items || null
+        items: body.items || null,
+        total_general: 0
     };
 };
 
 ValidateOrder.prototype.sumItems = () => {
     if (order.items.length > 0) {
         let total = 0;
-        order.items = order.items
+        order.items = order
+            .items
             .map(item=>{
-                let unit_total = (parseInt(item.quantity) * parseFloat(item.unit_price));
+
+                const unit_total = (parseInt(item.quantity) * parseFloat(item.price));
                 total += unit_total;
-                item.unit_total = unit_total;
-                return item;
+
+                return Object.assign({}, item, {total: unit_total});
             });
 
         order.total_general = total;
