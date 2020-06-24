@@ -24,8 +24,6 @@ exports.post = async (req, res, next) => {
         validateProduct.set(req.body);
 
         const product = validateProduct.getProduct();
-        validateProduct.isValid(product, res, response);
-
         const data = await repository.save(product);
 
         response.responseCreated(res, data);

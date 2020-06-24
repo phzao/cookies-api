@@ -10,11 +10,16 @@ function ValidateOrder() {
 
 ValidateOrder.prototype.set = (body) => {
     order = {
-        to: body.to || null,
+        name: body.name || null,
         address: body.address || null,
         cep: body.cep || null,
         items: body.items || null,
-        total_general: 0
+        total_general: 0,
+        paid_at: body.paid_at || null,
+        observation: body.observation || null,
+        delivery_by: body.delivery_by || null,
+        total_freight: body.total_freight || null,
+        email: body.email || null
     };
 };
 
@@ -42,7 +47,7 @@ ValidateOrder.prototype.get = () => {
 ValidateOrder.prototype.isValid = (body) => {
     let contract = new ValidationContract();
 
-    contract.hasMinLen(body, 'to', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
+    contract.hasMinLen(body, 'name', 2, 'Nome é obrigatório e deve possuir no mínimo 2 caracteres');
     contract.hasMinLen(body, 'address', 20, 'Endereço deve conter no mínimo 20 caracteres');
     contract.hasMaxLen(body, 'address', 300, 'Endereço deve conter no máximo 300 caracteres');
     contract.hasExacLen(body, 'cep', 8, 'Cep deve conter 8 digitos');

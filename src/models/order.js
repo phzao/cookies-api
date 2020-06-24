@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const systemConst = require('../helpers/systtem-consts');
 
 const schema = new Schema({
-    to: {
+    name: {
         type: String,
         required: [true, "Nome de quem vai receber é obrigatorio"]
     },
@@ -22,14 +22,30 @@ const schema = new Schema({
         type: String,
         default: null
     },
+    email: {
+        type: String,
+        default: null
+    }, 
     address: {
         type: String,
         required: [true, "Endereço é obrigatório"]
     },
+    observation: {
+        type: String,
+        default: null
+    }, 
+    delivery_by: {
+        type: Schema.Types.ObjectId,
+        default: null
+    }, 
     discount: {
         type: Number,
         default: null
     },
+    total_freight: {
+        type: Number,
+        default: null
+    }, 
     total_general: {
         type: Number,
         required: [true, "Preço Total é obrigatorio"]
@@ -73,10 +89,14 @@ const schema = new Schema({
     updated_at: {
         type: Date,
         default: null
-    }
+    },
+    paid_at: {
+        type: Date,
+        default: null
+    } 
 },
-        {
-            versionKey: false
-});
+    {
+        versionKey: false
+    });
 
 module.exports = mongoose.model('Order', schema);
