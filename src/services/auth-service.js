@@ -26,7 +26,7 @@ exports.authorize = async (req, res, next) => {
         let tokenData = await tokenRepository.getByToken(token);
 
         if (!tokenData) {
-          response.responseBadRequest(res, 'Token invalido');
+          response.responseForbidden(res, 'Token invalido');
         }
 
         if (apiTokenContract.isExpiredDate(tokenData.expire_at)) {

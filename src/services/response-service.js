@@ -39,3 +39,10 @@ exports.responseUnauthorized = (res, message, headers) => {
         message: message
     });
 };
+
+ exports.responseForbidden = (res, message, headers) => {
+    res.status(systemConst.HTTP_FORBIDDEN).send({
+        status: 'error',
+        message: message
+    });
+}; 

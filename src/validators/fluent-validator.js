@@ -29,7 +29,7 @@ ValidationContract.prototype.hasMaxLenOrNull = (body, field, len, message) => {
         return;
     }
 
-    if (body[field] !==undefined &&  body[field].length !== len) {
+    if (body[field] !==undefined &&  body[field].length > len) {
         errors[field] = message;
     }
 }
