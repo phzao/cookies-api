@@ -78,7 +78,7 @@ const schema = new Schema({
     }],
     status: {
         type: String,
-        enum: [systemConst.ORDER_OPEN, systemConst.ORDER_DONE, systemConst.ORDER_CANCELED, systemConst.ORDER_PROCESSING, systemConst.ORDER_DELIVERY],
+        enum: [systemConst.ORDER_OPEN, systemConst.ORDER_DONE, systemConst.ORDER_CANCELED, systemConst.ORDER_PROCESSING, systemConst.ORDER_DELIVERED],
         required: [true, "Status é obrigatório"],
         default: systemConst.ORDER_OPEN
     },
